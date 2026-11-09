@@ -1,0 +1,6 @@
+flask==3.0.3
+# BUG (for the SCA demo): an old 'requests' with a known CVE (CVE-2018-18074 -
+# leaks the Authorization header on a cross-host redirect). It is pure Python,
+# so it installs on any OS with no compiler; pip-audit flags it.
+# Fixed in requests 2.20.0.
+requests==2.19.1
