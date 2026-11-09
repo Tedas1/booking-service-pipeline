@@ -1,0 +1,15 @@
+name: security
+on: [push, pull_request]
+jobs:
+  security-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install bandit pip-audit
+      # SAST gate: -ll fails on MEDIUM severity and above (catches eval)
+      - run: bandit -r . -ll
+      # SCA gate: fails on any known-CVE dependency
+      - run: pip-audit -r requirements.txt
